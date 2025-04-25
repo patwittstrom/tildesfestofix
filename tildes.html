@@ -19,8 +19,7 @@
       background-image: url('images/b1.jpg');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
-      height: 100vh;
+      height: 40vh;
       color: white;
       display: flex;
       align-items: center;
@@ -60,7 +59,97 @@
     .cta-button:hover {
       background-color: #e96096;
     }
+    section#about {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: #ffffff;
+    }
+    .about-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .about-text {
+      max-width: 600px;
+      font-size: 1.1rem;
+      color: #444;
+    }
+    section#packages {
+      padding: 4rem 2rem;
+      background-color: #fff0f5;
+      text-align: center;
+    }
+    .tabs {
+      margin-bottom: 2rem;
+    }
+    .tabs button {
+      background: #ff80ab;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin: 0 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tabs button.active {
+      background: #e96096;
+    }
+    .package-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .package {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 300px;
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .package img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .package h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: #e96096;
+    }
+    .package p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+    .package .price {
+      font-weight: bold;
+      color: #222;
+    }
   </style>
+  <script>
+    function showPrices(type) {
+      const priceElements = document.querySelectorAll('.price[data-base]');
+      priceElements.forEach(el => {
+        const base = parseFloat(el.dataset.base);
+        let final = base;
+        if (type === 'forening') final = base * 0.8;
+        if (type === 'foretag') el.innerText = `Från ${base * 0.8} kr exkl. moms`;
+        else el.innerText = `Från ${final.toFixed(0)} kr`;
+      });
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(type).classList.add('active');
+    }
+    window.addEventListener('DOMContentLoaded', () => showPrices('privat'));
+  </script>
 </head>
 <body>
   <header>
@@ -69,5 +158,45 @@
       <button class="cta-button">Se våra paket & priser</button>
     </div>
   </header>
+
+  <section id="about">
+    <img src="images/tilde.jpeg" alt="Tilde" class="about-img">
+    <div class="about-text">
+      <p>
+        Hej! Jag heter Tilde och har sedan 2016 hjälpt till att göra fester minnesvärda i Skåne.
+        Med glädje, energi och lekfullhet hyr jag ut hoppborgar, godismaskiner och andra festprylar
+        som får barn och vuxna att le. Våga ta festen till nästa nivå - jag fixar det roliga!
+      </p>
+    </div>
+  </section>
+
+  <section id="packages">
+    <h2>Våra populäraste paket</h2>
+    <div class="tabs">
+      <button id="privat" onclick="showPrices('privat')">Privatperson</button>
+      <button id="forening" onclick="showPrices('forening')">Förening</button>
+      <button id="foretag" onclick="showPrices('foretag')">Företag</button>
+    </div>
+    <div class="package-container">
+      <div class="package">
+        <img src="images/hoppborg.jpg" alt="Hoppborg">
+        <h3>Hoppborgspaket</h3>
+        <p>Perfekt för barnkalas och utomhusfester. Inkluderar transport och uppsättning.</p>
+        <p class="price" data-base="899">Från 899 kr</p>
+      </div>
+      <div class="package">
+        <img src="images/popcorn.jpg" alt="Godismaskin">
+        <h3>Godismaskin & popcorn</h3>
+        <p>Gör festen extra god med popcorn och sockervadd! Enkel att använda och levereras med tillbehör.</p>
+        <p class="price" data-base="699">Från 699 kr</p>
+      </div>
+      <div class="package">
+        <img src="images/kombo.png" alt="Kombo paket">
+        <h3>Kombo-paket</h3>
+        <p>En hoppborg + en godismaskin = garanterad succé. Bästa valet för större event!</p>
+        <p class="price" data-base="1399">Från 1399 kr</p>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
